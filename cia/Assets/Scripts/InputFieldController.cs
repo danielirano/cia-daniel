@@ -96,11 +96,28 @@ public class InputFieldController : MonoBehaviour
 
     }
 
+
+    //criação da mensagem
+
+    void SendWordSendMessage(bool palavraCorreta)
+    {
+        double time = Time.time;
+        string timestats = "palavra";
+        int id_jogador = PlayerPrefs.GetInt("id_jogador", 1);
+        int gameID = PlayerPrefs.GetInt("gameID", 123);
+        int resourceID = PlayerPrefs.GetInt("resourceID", 456);
+
+        WordSendMessage message = new WordSendMessage(time, timestats, id_jogador, gameID, resourceID, palavraCorreta);
+
+        StartCoroutine(MessageSender.Instance.Send(message, "http://localhost:5000/api"));
+    }
+
     public void ReadStringInput()
     {
         input = inputField.text;
         inputField.text = "";
-        ValidateWords();
+        bool palavraCorreta = ValidateWords();
+        SendWordSendMessage(palavraCorreta);
         //EventSystem.current.SetSelectedGameObject(null);
        
 
@@ -163,68 +180,58 @@ public class InputFieldController : MonoBehaviour
 
     }
 
-    public void ValidateWords()
+
+
+    public bool ValidateWords()
+{
+    if (wordsRead[phraseId] == input.ToLower()) // Palavra correta
     {
-        if (wordsRead[phraseId] == input.ToLower()) //verifica se a palavra est  certa
+        int pos = phraseId;
+        string[] updateString = eachPhrase[pos].Split('_');
+        eachPhrase[pos] = updateString[0] + input.ToUpper() + updateString[1];
+        ReplaceUnderline(eachPhrase[phraseId]);
+
+        if (pos == eachPhrase.Length - 1 && ultimoCaso == 1)
         {
-            int pos = phraseId;
-            string[] updateString = eachPhrase[pos].Split('_');
-            eachPhrase[pos] = updateString[0] + input.ToUpper() + updateString[1];
-            ReplaceUnderline(eachPhrase[phraseId]);
-            if (pos == eachPhrase.Length - 1 && ultimoCaso == 1)
-            {
-                audioManager.RightAnswer();
-                aviso.SetActive(false);
-                TutControl.ObjectiveTut();
-                objController.Finish();
-
-                
-            }
-            else if (checkPositions[pos] == false && pos != eachPhrase.Length - 1)
-            {
-                //wordsRead[pos] = "e5ef1a3s2de87rf0SCwfBTHYwefedse578899";
-
-                
-                //phraseTextBox.text = eachPhrase[phraseId];
-                
-                checkPositions[pos] = true;
-                audioManager.RightAnswer();
-                if (TutControl.tutId == 1)
-                {
-                    TutControl.nextStepTutorial();
-                }
-                StartCoroutine(StartDelay(acertoTela));
-                //int i = 0;
-                //while (checkPositions[i] == true && i < wordsRead.Count - 2)
-                //{
-                  //  i++;
-                //}
-                //phraseId = i;
-                //phraseTextBox.text = eachPhrase[phraseId];
-                //ReplaceUnderline();
-                //objController.CountObjectivePhrase();
-                //UpdateDetails();
-            }
-
-
-
+            audioManager.RightAnswer();
+            aviso.SetActive(false);
+            TutControl.ObjectiveTut();
+            objController.Finish();
         }
-        else
+        else if (checkPositions[pos] == false && pos != eachPhrase.Length - 1)
         {
-            CheckErrors();
-            audioManager.WrongAnswer();
-            StartCoroutine(StartDelay(erroTela));
+            checkPositions[pos] = true;
+            audioManager.RightAnswer();
 
-            if (input.ToLower() == Changecharacters(wordsRead[phraseId]))
+            if (TutControl.tutId == 1)
             {
-                lupinAnimacao.ResetTrigger("Vai");
-                lupinAnimacao.SetTrigger("Vai");
-
-                lupinAnimacao.ResetTrigger("Para");
-                lupinAnimacao.SetTrigger("Para");
+                TutControl.nextStepTutorial();
             }
+
+            StartCoroutine(StartDelay(acertoTela));
         }
+
+        return true; // ✅ Palavra correta
     }
+    else
+    {
+        CheckErrors();
+        audioManager.WrongAnswer();
+        StartCoroutine(StartDelay(erroTela));
+
+        if (input.ToLower() == Changecharacters(wordsRead[phraseId]))
+        {
+            lupinAnimacao.ResetTrigger("Vai");
+            lupinAnimacao.SetTrigger("Vai");
+
+            lupinAnimacao.ResetTrigger("Para");
+            lupinAnimacao.SetTrigger("Para");
+        }
+
+        return false; // ❌ Palavra incorreta
+    }
+}
+
 
     private void UpdateDetails()
     {

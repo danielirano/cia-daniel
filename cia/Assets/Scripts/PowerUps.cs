@@ -28,6 +28,57 @@ public class PowerUps : MonoBehaviour
     private TutorialController TutControl;
     StartTutorial startTut;
 
+    //adicao dos contadores 
+        private int countPowerUpTime = 0;
+        private int countPowerUpLetter = 0;
+        private int countPowerUpWord = 0;
+        private int detalhesUsado = 0;
+        private int countPowerUpUltimo = 0;
+
+
+
+        private int totalPowerUpUsado => countPowerUpTime + countPowerUpLetter + countPowerUpWord + countPowerUpUltimo;
+
+
+    //funcao para enviar 
+    private void SendPowerUpMessage(int powerupType, int usoAtual)
+    {
+        double timeNow = Time.realtimeSinceStartup;
+        string timestats = "usou powerup tipo " + powerupType;
+        int idJogador = PlayerPrefs.GetInt("PlayerID", 1);
+        int gameID = PlayerPrefs.GetInt("GameID", 123);
+        int resourceID = PlayerPrefs.GetInt("resourceID", 456); 
+        bool powerupUsado = true;
+
+        PowerUpMessage message = new PowerUpMessage(
+            powerupType,
+            timeNow,
+            timestats,
+            idJogador,
+            gameID,
+            resourceID,
+            powerupUsado,
+            usoAtual
+        );
+
+        StartCoroutine(MessageSender.Instance.Send(message, "http://localhost:5000/api"));
+    }
+    //detalhes do caso
+    void SendCaseDetailsMessage(int detalhesUtilizado)
+    {
+        double time = Time.time;
+        string timestats = "acessou os detalhes do caso";
+        int id_jogador = PlayerPrefs.GetInt("PlayerID", 1);
+        int gameID = PlayerPrefs.GetInt("gameID", 123);
+        int resourceID = PlayerPrefs.GetInt("resourceID", 456);
+
+        CaseDetailsMessage message = new CaseDetailsMessage(
+            time, timestats, id_jogador, gameID, resourceID, true, detalhesUtilizado
+        );
+
+        StartCoroutine(MessageSender.Instance.Send(message, "http://localhost:5000/api"));
+    }
+
 
 
     void Awake()
@@ -68,6 +119,9 @@ public class PowerUps : MonoBehaviour
             coinDisplay.text = coins.ToString();
             CheckCoins();
 
+            countPowerUpTime++;
+            SendPowerUpMessage(1, totalPowerUpUsado);
+
         }
     }
     public void PowerUpLetter()
@@ -78,6 +132,10 @@ public class PowerUps : MonoBehaviour
             wh.DicaLetra();
             coinDisplay.text = coins.ToString();
             CheckCoins();
+
+            countPowerUpLetter++;
+            SendPowerUpMessage(2, totalPowerUpUsado);
+
             if (TutControl.tutId == 3)
             {
                 TutControl.nextStepTutorial();
@@ -95,6 +153,10 @@ public class PowerUps : MonoBehaviour
             coinDisplay.text = coins.ToString();
             inpFController.PowerUpW();
             CheckCoins();
+
+            countPowerUpWord++;
+            SendPowerUpMessage(3, totalPowerUpUsado);
+
             if (TutControl.tutId == 3)
             {
                 TutControl.nextStepTutorial();
@@ -110,7 +172,11 @@ public class PowerUps : MonoBehaviour
             coinDisplay.text = coins.ToString();
             inpFController.PowerUpL();
             CheckCoins();
+
+            countPowerUpUltimo++;
+            SendPowerUpMessage(4, totalPowerUpUsado);
         }
+        
     }
 
     public void FreeHint()
@@ -141,6 +207,9 @@ public class PowerUps : MonoBehaviour
         {
             TutControl.nextStepTutorial();
         }
+         // coleta de dados
+             detalhesUsado++;
+             SendCaseDetailsMessage(detalhesUsado);
     }
 
     public void InitButtons()

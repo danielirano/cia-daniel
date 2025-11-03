@@ -101,6 +101,10 @@ public class PresetsController : MonoBehaviour
     public void PresetButton()
     {
 
+
+        string selectedPreset = EventSystem.current.currentSelectedGameObject.name;
+        int gameMode = 0; //Cria o gameMode para ser coletado de acordo com cada caso
+
         switch (EventSystem.current.currentSelectedGameObject.name)
         {
             case "Preset1":
@@ -108,6 +112,7 @@ public class PresetsController : MonoBehaviour
                 PlayerPrefs.SetInt("PrecoAjuda", 0);
                 PlayerPrefs.SetInt("PalavrasInvertidas", 0);
                 PlayerPrefs.SetInt("PalavrasDiagonais", 0);
+                gameMode = 1; //Modo livre
                 break;
 
             case "Preset2":
@@ -115,6 +120,7 @@ public class PresetsController : MonoBehaviour
                 PlayerPrefs.SetInt("PrecoAjuda", 1);
                 PlayerPrefs.SetInt("PalavrasInvertidas", 0);
                 PlayerPrefs.SetInt("PalavrasDiagonais", 0);
+                gameMode = 2; //Modo padrão
                
 
                 break;
@@ -124,11 +130,21 @@ public class PresetsController : MonoBehaviour
                 PlayerPrefs.SetInt("PrecoAjuda", 1);
                 PlayerPrefs.SetInt("PalavrasInvertidas", 1);
                 PlayerPrefs.SetInt("PalavrasDiagonais", 1);
+                gameMode = 3; //Modo Desafiador
                 break;
 
         }
         PlayerPrefs.Save();
         LoadPreferences();
+        // Coleta de dados
+            double time = Time.time;
+            int id_jogador = PlayerPrefs.GetInt("PlayerID", 1);
+            int gameID = PlayerPrefs.GetInt("GameID", 123);
+            int resourceID = PlayerPrefs.GetInt("ResourceID", 456);
+        //Envio da message
+            GameModeMessage message = new GameModeMessage(time, gameMode, id_jogador, gameID, resourceID);
+            StartCoroutine(MessageSender.Instance.Send(message, "http://localhost:5000/api"));
+
         canvasPreset.SetActive(false);
         _canvas.SetActive(true);
         caseController.CheckNarrative();

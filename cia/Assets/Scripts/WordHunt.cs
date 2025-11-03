@@ -462,21 +462,19 @@ public class WordHunt : MonoBehaviour {
 
     }
 
-    private void ValidateWord()
+        private void ValidateWord()
     {
         word = string.Empty;
 
         foreach (Transform t in highlightedObjects)
         {
             word += t.GetComponentInChildren<Text>().text.ToLower();
-            
         }
 
-        
+        bool isCorrect = insertedWords.Contains(word) || insertedWords.Contains(Reverse(word));
 
-        if (insertedWords.Contains(word) || insertedWords.Contains(Reverse(word)))
+        if (isCorrect)
         {
-            
             foreach (Transform h in highlightedObjects)
             {
                 h.GetComponent<Image>().color = new Color32(128, 255, 128, 255);
@@ -484,29 +482,18 @@ public class WordHunt : MonoBehaviour {
                 h.GetComponent<LetterObjectScript>().hasPainted = true;
                 molduraLetra.SetActive(false);
             }
-            //Visual Event
-            //RectTransform r1 = highlightedObjects[0].GetComponent<RectTransform>();
-            //RectTransform r2 = highlightedObjects[highlightedObjects.Count() - 1].GetComponent<RectTransform>();
-            //FoundWord(r1, r2);
-         
-            objController.CountObjective(word);
-            int pos =0;
 
-            if (wordsCopy.Contains(word))
-            {
-                pos = wordsCopy.FindIndex(str => str.Contains(word));
-            }
-            else
-            {
-                pos = wordsCopy.FindIndex(str => str.Contains(Reverse(word)));
-            }
-            
+            objController.CountObjective(word);
+            int pos = wordsCopy.Contains(word)
+                ? wordsCopy.FindIndex(str => str.Contains(word))
+                : wordsCopy.FindIndex(str => str.Contains(Reverse(word)));
+
             checkPaint[pos] = true;
 
-            //ScrollViewWords.instance.CheckWord(word);
             audioManager.RightAnswer();
             insertedWords.Remove(word);
             insertedWords.Remove(Reverse(word));
+
             if (TutControl.tutId == 0)
             {
                 TutControl.nextStepTutorial();
@@ -516,19 +503,33 @@ public class WordHunt : MonoBehaviour {
             {
                 Finish();
             }
-            
         }
-        else {
+        else
+        {
             foreach (Transform h in highlightedObjects)
             {
                 h.GetComponent<Image>().color = new Color32(255, 128, 128, 255);
-
             }
+
             audioManager.WrongAnswer();
             StartCoroutine(ColorDelay());
-            
         }
-    }
+
+        // Enviar mensagem de validação de palavra
+        WordValidationMessage validationMessage = new WordValidationMessage(
+            Time.time,
+            PlayerPrefs.GetInt("PlayerID", 1),
+            PlayerPrefs.GetInt("gameID", 123),
+            PlayerPrefs.GetInt("resourceID", 456),
+            word,
+            isCorrect
+        );
+
+        string serverURL = "http://localhost:5000/api";
+
+        StartCoroutine(MessageSender.Instance.Send(validationMessage, serverURL));
+    }                                                                                                                                               
+
 
     public IEnumerator ColorDelay()
     {

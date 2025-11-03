@@ -362,12 +362,35 @@ public class CaseController : MonoBehaviour
         ShowCase();
     }
 
-    public void StartCase()
+    //public void StartCase()
+    //{
+      //  PlayerPrefs.SetInt("LoadCaseId", caseID);
+        //PlayerPrefs.SetString("LoadCaseSize", caseSize[caseID]);
+        //SceneManager.LoadScene("TelaJogo");
+    //}
+
+      public void StartCase()
     {
         PlayerPrefs.SetInt("LoadCaseId", caseID);
         PlayerPrefs.SetString("LoadCaseSize", caseSize[caseID]);
+
+        double timeNow = Time.realtimeSinceStartup;
+        string timestats = "iniciou o caso";
+        int idJogador = PlayerPrefs.GetInt("PlayerID", 1);
+        int gameID = PlayerPrefs.GetInt("GameID", 123);
+        int resourceID = PlayerPrefs.GetInt("ResourceID", 456);
+        int idDoCaso = caseID; // campo adicional que você está adicionando
+
+        CaseSelectedMessage message = new CaseSelectedMessage(
+            timeNow, timestats, idJogador, gameID, resourceID, idDoCaso
+        );
+
+        StartCoroutine(MessageSender.Instance.Send(message, "http://localhost:5000/api"));
+
         SceneManager.LoadScene("TelaJogo");
-    }
+}
+
+
 
 
     void SetTimeObjectives(int id)

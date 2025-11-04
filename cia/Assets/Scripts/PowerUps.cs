@@ -61,7 +61,7 @@ public class PowerUps : MonoBehaviour
             usoAtual
         );
 
-        StartCoroutine(MessageSender.Instance.Send(message, "http://localhost:5000/api"));
+        StartCoroutine(MessageSender.Instance.Send(message));
     }
     //detalhes do caso
     void SendCaseDetailsMessage(int detalhesUtilizado)
@@ -76,7 +76,7 @@ public class PowerUps : MonoBehaviour
             time, timestats, id_jogador, gameID, resourceID, true, detalhesUtilizado
         );
 
-        StartCoroutine(MessageSender.Instance.Send(message, "http://localhost:5000/api"));
+        StartCoroutine(MessageSender.Instance.Send(message));
     }
 
 

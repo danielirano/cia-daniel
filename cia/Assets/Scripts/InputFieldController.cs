@@ -109,7 +109,7 @@ public class InputFieldController : MonoBehaviour
 
         WordSendMessage message = new WordSendMessage(time, timestats, id_jogador, gameID, resourceID, palavraCorreta);
 
-        StartCoroutine(MessageSender.Instance.Send(message, "http://localhost:5000/api"));
+        StartCoroutine(MessageSender.Instance.Send(message));
     }
 
     public void ReadStringInput()

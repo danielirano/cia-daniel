@@ -143,7 +143,7 @@ public class PresetsController : MonoBehaviour
             int resourceID = PlayerPrefs.GetInt("ResourceID", 456);
         //Envio da message
             GameModeMessage message = new GameModeMessage(time, gameMode, id_jogador, gameID, resourceID);
-            StartCoroutine(MessageSender.Instance.Send(message, "http://localhost:5000/api"));
+            StartCoroutine(MessageSender.Instance.Send(message));
 
         canvasPreset.SetActive(false);
         _canvas.SetActive(true);

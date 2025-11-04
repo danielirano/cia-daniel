@@ -15,8 +15,6 @@ public class WordHunt : MonoBehaviour {
 
     [SerializeField] private TextAsset palavrasFile;
 
-
-
     private CanvasGroup canvas;
     private AudioManager audioManager;
 
@@ -525,9 +523,7 @@ public class WordHunt : MonoBehaviour {
             isCorrect
         );
 
-        string serverURL = "http://localhost:5000/api";
-
-        StartCoroutine(MessageSender.Instance.Send(validationMessage, serverURL));
+        StartCoroutine(MessageSender.Instance.Send(validationMessage));
     }                                                                                                                                               
 
 

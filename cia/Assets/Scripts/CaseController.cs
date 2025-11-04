@@ -385,7 +385,7 @@ public class CaseController : MonoBehaviour
             timeNow, timestats, idJogador, gameID, resourceID, idDoCaso
         );
 
-        StartCoroutine(MessageSender.Instance.Send(message, "http://localhost:5000/api"));
+        StartCoroutine(MessageSender.Instance.Send(message));
 
         SceneManager.LoadScene("TelaJogo");
 }

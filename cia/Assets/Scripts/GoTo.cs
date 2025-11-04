@@ -5,6 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class GoTo : MonoBehaviour
 {
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        CarregaDados.LoadURL();
+        Debug.Log("URL = " + MessageSender.serverURL);
+    }
+
     public void LoadCena(string cena)
     {
         // Definindo o comportamento do jogo baseado no PlayerPrefs
@@ -30,7 +38,7 @@ public class GoTo : MonoBehaviour
         PlayGameMessage message = new PlayGameMessage(time, timeType, id_jogador, gameID, resourceID);
 
         // Enviar a mensagem usando o MessageSender
-        StartCoroutine(MessageSender.Instance.Send(message, "http://localhost:5000/api"));
+        StartCoroutine(MessageSender.Instance.Send(message));
 
         // Armazenar o índice da cena atual
         int index = SceneManager.GetActiveScene().buildIndex;

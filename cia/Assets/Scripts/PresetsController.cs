@@ -137,12 +137,11 @@ public class PresetsController : MonoBehaviour
         PlayerPrefs.Save();
         LoadPreferences();
         // Coleta de dados
-            double time = Time.time;
-            int id_jogador = PlayerPrefs.GetInt("PlayerID", 1);
+            int playerID = PlayerPrefs.GetInt("PlayerID", 1);
             int gameID = PlayerPrefs.GetInt("GameID", 123);
             int resourceID = PlayerPrefs.GetInt("ResourceID", 456);
         //Envio da message
-            GameModeMessage message = new GameModeMessage(time, gameMode, id_jogador, gameID, resourceID);
+            GameModeMessage message = new GameModeMessage(playerID, gameID, resourceID, gameMode);
             StartCoroutine(MessageSender.Instance.Send(message));
 
         canvasPreset.SetActive(false);

@@ -515,7 +515,6 @@ public class WordHunt : MonoBehaviour {
 
         // Enviar mensagem de validação de palavra
         WordValidationMessage validationMessage = new WordValidationMessage(
-            Time.time,
             PlayerPrefs.GetInt("PlayerID", 1),
             PlayerPrefs.GetInt("gameID", 123),
             PlayerPrefs.GetInt("resourceID", 456),

@@ -43,20 +43,18 @@ public class PowerUps : MonoBehaviour
     //funcao para enviar 
     private void SendPowerUpMessage(int powerupType, int usoAtual)
     {
-        double timeNow = Time.realtimeSinceStartup;
-        string timestats = "usou powerup tipo " + powerupType;
-        int idJogador = PlayerPrefs.GetInt("PlayerID", 1);
+        
+        int playerID = PlayerPrefs.GetInt("PlayerID", 1);
         int gameID = PlayerPrefs.GetInt("GameID", 123);
         int resourceID = PlayerPrefs.GetInt("resourceID", 456); 
+        string timestats = "usou powerup tipo " + powerupType;
         bool powerupUsado = true;
 
-        PowerUpMessage message = new PowerUpMessage(
-            powerupType,
-            timeNow,
-            timestats,
-            idJogador,
+        PowerUpMessage message = new PowerUpMessage(playerID,
             gameID,
             resourceID,
+            powerupType,
+            timestats,
             powerupUsado,
             usoAtual
         );
@@ -66,15 +64,13 @@ public class PowerUps : MonoBehaviour
     //detalhes do caso
     void SendCaseDetailsMessage(int detalhesUtilizado)
     {
-        double time = Time.time;
-        string timestats = "acessou os detalhes do caso";
-        int id_jogador = PlayerPrefs.GetInt("PlayerID", 1);
+        
+        int playerID = PlayerPrefs.GetInt("PlayerID", 1);
         int gameID = PlayerPrefs.GetInt("gameID", 123);
         int resourceID = PlayerPrefs.GetInt("resourceID", 456);
+        string timestats = "acessou os detalhes do caso";
 
-        CaseDetailsMessage message = new CaseDetailsMessage(
-            time, timestats, id_jogador, gameID, resourceID, true, detalhesUtilizado
-        );
+        CaseDetailsMessage message = new CaseDetailsMessage(playerID, gameID, resourceID, timestats, true, detalhesUtilizado);
 
         StartCoroutine(MessageSender.Instance.Send(message));
     }

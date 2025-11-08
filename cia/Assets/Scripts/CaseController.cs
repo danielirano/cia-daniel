@@ -384,6 +384,10 @@ public class CaseController : MonoBehaviour
 
         StartCoroutine(MessageSender.Instance.Send(message));
 
+        TimeStatsMessage timeStatsMessage = new TimeStatsMessage(playerID, gameID, resourceID, 1, 0);  
+
+        StartCoroutine(MessageSender.Instance.Send(timeStatsMessage));
+
         SceneManager.LoadScene("TelaJogo");
 }
 

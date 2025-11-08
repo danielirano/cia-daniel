@@ -20,14 +20,14 @@ public class Message {
 [Serializable]
 public class PlayGameMessage : Message
 {
-    public int timeType;       // 0 - início, 1 - fim
+
     
-    public PlayGameMessage(int playerID, int gameID, int resourceID, int timeType)
+    public PlayGameMessage(int playerID, int gameID, int resourceID)
     {
         this.playerID = playerID;
         this.gameID = gameID;
         this.resourceID = resourceID;
-        this.timeType = timeType;
+
     }
 }
 
@@ -140,3 +140,19 @@ public class WordValidationMessage : Message
         this.correct = correct;
     }
 }
+[Serializable]
+public class TimeStatsMessage : Message
+{
+    public int timeEvent;  // 0 = jogo, 1 = fase/caso
+    public int timeType;   // 0 = início, 1 = fim
+
+    public TimeStatsMessage(int playerID, int gameID, int resourceID, int timeEvent, int timeType)
+    {
+        this.playerID = playerID;
+        this.gameID = gameID;
+        this.resourceID = resourceID;
+        this.timeEvent = timeEvent;
+        this.timeType = timeType;
+    }
+}
+

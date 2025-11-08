@@ -28,13 +28,15 @@ public class GoTo : MonoBehaviour
         }
 
         // Coletar dados para a mensagem
-        int timeType = 0; // 0 - início, 1 - fim
         int playerID = PlayerPrefs.GetInt("PlayerID", 1); // ID do jogador, ou qualquer outra lógica que defina
         int gameID = PlayerPrefs.GetInt("GameID", 123); // ID do jogo
         int resourceID = PlayerPrefs.GetInt("ResourceID", 456); // ID do recurso
 
         // Criar a mensagem para o servidor
-        PlayGameMessage message = new PlayGameMessage(playerID, gameID, resourceID, timeType);
+        PlayGameMessage message = new PlayGameMessage(playerID, gameID, resourceID);
+
+        TimeStatsMessage timeStatsMessage = new TimeStatsMessage(playerID, gameID, resourceID, 0, 0); 
+     StartCoroutine(MessageSender.Instance.Send(timeStatsMessage));
 
         // Enviar a mensagem usando o MessageSender
         StartCoroutine(MessageSender.Instance.Send(message));

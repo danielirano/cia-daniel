@@ -36,7 +36,7 @@ public class GoTo : MonoBehaviour
         PlayGameMessage message = new PlayGameMessage(playerID, gameID, resourceID);
 
         TimeStatsMessage timeStatsMessage = new TimeStatsMessage(playerID, gameID, resourceID, 0, 0); 
-     StartCoroutine(MessageSender.Instance.Send(timeStatsMessage));
+        StartCoroutine(MessageSender.Instance.Send(timeStatsMessage));
 
         // Enviar a mensagem usando o MessageSender
         StartCoroutine(MessageSender.Instance.Send(message));

@@ -8,7 +8,6 @@ cia/[Oo]bj/
 cia/[Bb]uild/
 cia/[Bb]uilds/
 cia/[Ll]ogs/
-cia/[Uu]ser[Ss]ettings/
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data

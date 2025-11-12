@@ -50,17 +50,15 @@ public class GameModeMessage : Message
 [Serializable]
 public class CaseSelectedMessage : Message
 {
-    public string timestats;   // exemplo: "iniciou o caso" - falta configurar
-    public int caseId;
+    public int caseID;
 
-    public CaseSelectedMessage(int playerID, int gameID, int resourceID, string timestats, int caseId)
+    public CaseSelectedMessage(int playerID, int gameID, int resourceID, int caseID)
     {
         
         this.playerID = playerID;
         this.gameID = gameID;
-        this.resourceID = resourceID;        
-        this.timestats = timestats;
-        this.caseId = caseId;
+        this.resourceID = resourceID;
+        this.caseID = caseID;
     }
 }
 
@@ -69,17 +67,15 @@ public class CaseSelectedMessage : Message
 public class PowerUpMessage : Message
 {
     public int powerupType;    // powerup1, powerup2, powerup3, powerup4
-    public string timestats;   // tempo em que usou o powerup
     public bool powerup;       // true quando usar um powerup
     public int powerupUtilizado; // contador de usos
 
-    public PowerUpMessage(int playerID, int gameID, int resourceID, int powerupType, string timestats, bool powerup, int powerupUtilizado)
+    public PowerUpMessage(int playerID, int gameID, int resourceID, int powerupType, bool powerup, int powerupUtilizado)
     {
         this.playerID = playerID;
         this.gameID = gameID;
         this.resourceID = resourceID;
         this.powerupType = powerupType;
-        this.timestats = timestats;
         this.powerup = powerup;
         this.powerupUtilizado = powerupUtilizado;
     }
@@ -89,16 +85,14 @@ public class PowerUpMessage : Message
 [Serializable]
 public class CaseDetailsMessage : Message
 {
-    public string timestats;
     public bool powerup;         // true quando usar "mostrar detalhes"
     public int detalhesUtilizado; // contador de usos
 
-    public CaseDetailsMessage(int playerID, int gameID, int resourceID, string timestats, bool powerup, int detalhesUtilizado)
+    public CaseDetailsMessage(int playerID, int gameID, int resourceID, bool powerup, int detalhesUtilizado)
     {
         this.playerID = playerID;
         this.gameID = gameID;
         this.resourceID = resourceID;
-        this.timestats = timestats;
         this.powerup = powerup;
         this.detalhesUtilizado = detalhesUtilizado;
     }
@@ -108,15 +102,13 @@ public class CaseDetailsMessage : Message
 [Serializable]
 public class WordSendMessage : Message
 {
-    public string timestats;
     public bool palavraCorreta; // true = correta, false = incorreta
 
-    public WordSendMessage(int playerID, int gameID, int resourceID, string timestats, bool palavraCorreta)
+    public WordSendMessage(int playerID, int gameID, int resourceID, bool palavraCorreta)
     {
         this.playerID = playerID;
         this.gameID = gameID;
         this.resourceID = resourceID;
-        this.timestats = timestats;
         this.palavraCorreta = palavraCorreta;
     }
 }

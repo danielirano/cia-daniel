@@ -105,9 +105,9 @@ public class InputFieldController : MonoBehaviour
         int playerID = PlayerPrefs.GetInt("playerID", 1);
         int gameID = PlayerPrefs.GetInt("gameID", 123);
         int resourceID = PlayerPrefs.GetInt("resourceID", 456);
-        string timestats = "palavra";
+        // string timestats = "palavra";
 
-        WordSendMessage message = new WordSendMessage(playerID, gameID, resourceID, timestats, palavraCorreta);
+        WordSendMessage message = new WordSendMessage(playerID, gameID, resourceID, palavraCorreta);
 
         StartCoroutine(MessageSender.Instance.Send(message));
     }

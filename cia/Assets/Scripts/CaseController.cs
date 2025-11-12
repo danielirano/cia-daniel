@@ -111,7 +111,7 @@ public class CaseController : MonoBehaviour
 
         caseText.text = "";
         caseText.text = caseDetails[caseID];
-       
+
         switch (caseSize[caseID])
         {
             case "P":
@@ -374,13 +374,12 @@ public class CaseController : MonoBehaviour
         PlayerPrefs.SetInt("LoadCaseId", caseID);
         PlayerPrefs.SetString("LoadCaseSize", caseSize[caseID]);
 
-        string timestats = "iniciou o caso";
         int playerID = PlayerPrefs.GetInt("PlayerID", 1);
         int gameID = PlayerPrefs.GetInt("GameID", 123);
         int resourceID = PlayerPrefs.GetInt("ResourceID", 456);
         int idDoCaso = caseID; // campo adicional que você está adicionando
 
-        CaseSelectedMessage message = new CaseSelectedMessage(playerID, gameID, resourceID, timestats, idDoCaso);
+        CaseSelectedMessage message = new CaseSelectedMessage(playerID, gameID, resourceID, idDoCaso);
 
         StartCoroutine(MessageSender.Instance.Send(message));
 

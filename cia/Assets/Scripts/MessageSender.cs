@@ -42,6 +42,7 @@ public class MessageSender : MonoBehaviour
     {
         // Serializa a mensagem para JSON
         string jsonMessage = JsonUtility.ToJson(message);
+        Debug.Log("mensagem = " + jsonMessage);
 
         // Cria uma requisição POST para enviar o JSON
         using (UnityWebRequest request = new UnityWebRequest(MessageSender.serverURL, "POST"))

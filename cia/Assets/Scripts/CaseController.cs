@@ -374,16 +374,13 @@ public class CaseController : MonoBehaviour
         PlayerPrefs.SetInt("LoadCaseId", caseID);
         PlayerPrefs.SetString("LoadCaseSize", caseSize[caseID]);
 
-        int playerID = PlayerPrefs.GetInt("PlayerID", 1);
-        int gameID = PlayerPrefs.GetInt("GameID", 123);
-        int resourceID = PlayerPrefs.GetInt("ResourceID", 456);
         int idDoCaso = caseID; // campo adicional que você está adicionando
 
-        CaseSelectedMessage message = new CaseSelectedMessage(playerID, gameID, resourceID, idDoCaso);
+        CaseSelectedMessage message = new CaseSelectedMessage(idDoCaso);
 
         StartCoroutine(MessageSender.Instance.Send(message));
 
-        TimeStatsMessage timeStatsMessage = new TimeStatsMessage(playerID, gameID, resourceID, 1, 0);  
+        TimeStatsMessage timeStatsMessage = new TimeStatsMessage(1, 0);  
 
         StartCoroutine(MessageSender.Instance.Send(timeStatsMessage));
 

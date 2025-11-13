@@ -44,33 +44,16 @@ public class PowerUps : MonoBehaviour
     private void SendPowerUpMessage(int powerupType, int usoAtual)
     {
         
-        int playerID = PlayerPrefs.GetInt("PlayerID", 1);
-        int gameID = PlayerPrefs.GetInt("GameID", 123);
-        int resourceID = PlayerPrefs.GetInt("resourceID", 456); 
-        // string timestats = "usou powerup tipo " + powerupType;
         bool powerupUsado = true;
 
-        PowerUpMessage message = new PowerUpMessage(playerID,
-            gameID,
-            resourceID,
-            powerupType,
-            // timestats,
-            powerupUsado,
-            usoAtual
-        );
+        PowerUpMessage message = new PowerUpMessage(powerupType, powerupUsado, usoAtual);
 
         StartCoroutine(MessageSender.Instance.Send(message));
     }
     //detalhes do caso
     void SendCaseDetailsMessage(int detalhesUtilizado)
     {
-        
-        int playerID = PlayerPrefs.GetInt("PlayerID", 1);
-        int gameID = PlayerPrefs.GetInt("gameID", 123);
-        int resourceID = PlayerPrefs.GetInt("resourceID", 456);
-        // string timestats = "acessou os detalhes do caso";
-
-        CaseDetailsMessage message = new CaseDetailsMessage(playerID, gameID, resourceID, true, detalhesUtilizado);
+        CaseDetailsMessage message = new CaseDetailsMessage(true, detalhesUtilizado);
 
         StartCoroutine(MessageSender.Instance.Send(message));
     }

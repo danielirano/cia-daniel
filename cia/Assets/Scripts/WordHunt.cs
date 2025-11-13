@@ -514,13 +514,7 @@ public class WordHunt : MonoBehaviour {
         }
 
         // Enviar mensagem de validação de palavra
-        WordValidationMessage validationMessage = new WordValidationMessage(
-            PlayerPrefs.GetInt("PlayerID", 1),
-            PlayerPrefs.GetInt("gameID", 123),
-            PlayerPrefs.GetInt("resourceID", 456),
-            word,
-            isCorrect
-        );
+        WordValidationMessage validationMessage = new WordValidationMessage(word, isCorrect);
 
         StartCoroutine(MessageSender.Instance.Send(validationMessage));
     }                                                                                                                                               

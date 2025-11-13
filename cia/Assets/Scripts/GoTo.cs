@@ -9,8 +9,8 @@ public class GoTo : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CarregaDados.LoadURL();
-        Debug.Log("URL = " + MessageSender.serverURL);
+        CarregaDados.Load(this);
+        Debug.Log("URL = " + CarregaDados.conf.serverURL);
     }
 
     public void LoadCena(string cena)
@@ -27,15 +27,10 @@ public class GoTo : MonoBehaviour
             PlayerPrefs.SetInt("LoadCaseId", 100);
         }
 
-        // Coletar dados para a mensagem
-        int playerID = PlayerPrefs.GetInt("PlayerID", 1); // ID do jogador, ou qualquer outra lógica que defina
-        int gameID = PlayerPrefs.GetInt("GameID", 123); // ID do jogo
-        int resourceID = PlayerPrefs.GetInt("ResourceID", 456); // ID do recurso
-
         // Criar a mensagem para o servidor
-        PlayGameMessage message = new PlayGameMessage(playerID, gameID, resourceID);
+        PlayGameMessage message = new PlayGameMessage();
 
-        TimeStatsMessage timeStatsMessage = new TimeStatsMessage(playerID, gameID, resourceID, 0, 0); 
+        TimeStatsMessage timeStatsMessage = new TimeStatsMessage(0, 0); 
         StartCoroutine(MessageSender.Instance.Send(timeStatsMessage));
 
         // Enviar a mensagem usando o MessageSender

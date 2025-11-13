@@ -102,12 +102,7 @@ public class InputFieldController : MonoBehaviour
     void SendWordSendMessage(bool palavraCorreta)
     {
         
-        int playerID = PlayerPrefs.GetInt("playerID", 1);
-        int gameID = PlayerPrefs.GetInt("gameID", 123);
-        int resourceID = PlayerPrefs.GetInt("resourceID", 456);
-        // string timestats = "palavra";
-
-        WordSendMessage message = new WordSendMessage(playerID, gameID, resourceID, palavraCorreta);
+        WordSendMessage message = new WordSendMessage(palavraCorreta);
 
         StartCoroutine(MessageSender.Instance.Send(message));
     }

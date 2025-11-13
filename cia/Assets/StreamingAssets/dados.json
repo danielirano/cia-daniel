@@ -1,0 +1,5 @@
+{
+    "serverURL": "http://localhost:5000/api",
+    "resourceID": 1,
+    "gameID": 1
+}

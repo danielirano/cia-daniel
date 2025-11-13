@@ -7,8 +7,7 @@ public class MessageSender : MonoBehaviour
 {
     // Singleton
     private static MessageSender _instance;
-    public static string serverURL;
-
+    
     public static string cookieValue = "";
     public static MessageSender Instance {
         get {
@@ -45,7 +44,7 @@ public class MessageSender : MonoBehaviour
         Debug.Log("mensagem = " + jsonMessage);
 
         // Cria uma requisição POST para enviar o JSON
-        using (UnityWebRequest request = new UnityWebRequest(MessageSender.serverURL, "POST"))
+        using (UnityWebRequest request = new UnityWebRequest(CarregaDados.conf.serverURL, "POST"))
         {
             byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonMessage);
             request.uploadHandler = new UploadHandlerRaw(bodyRaw);

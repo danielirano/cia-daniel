@@ -499,7 +499,7 @@ public class WordHunt : MonoBehaviour {
 
             if (insertedWords.Count <= 0)
             {
-                Finish();
+                 Finish?.Invoke(); //alterado para corrigir erro de compilação
             }
         }
         else

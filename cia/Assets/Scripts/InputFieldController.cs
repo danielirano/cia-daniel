@@ -188,9 +188,6 @@ public class InputFieldController : MonoBehaviour
 
         if (pos == eachPhrase.Length - 1 && ultimoCaso == 1)
         {
-            TimeStatsMessage timeStatsMessage = new TimeStatsMessage(TimeEvent.Game, TimeType.End); 
-            StartCoroutine(MessageSender.Instance.Send(timeStatsMessage));
-            
             audioManager.RightAnswer();
             aviso.SetActive(false);
             TutControl.ObjectiveTut();

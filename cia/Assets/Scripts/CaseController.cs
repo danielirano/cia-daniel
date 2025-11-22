@@ -501,11 +501,6 @@ public class CaseController : MonoBehaviour
         }
         CheckCertificate();
 
-
-
-
-
-
         }
 
     public void SearchForUnfinished()
@@ -542,7 +537,7 @@ public class CaseController : MonoBehaviour
         {
             certificateController.EnableCertifificate();
 
-            TimeStatsMessage timeStatsMessage = new TimeStatsMessage(TimeEvent.Game, TimeType.End, caseID);  
+            TimeStatsMessage timeStatsMessage = new TimeStatsMessage(TimeEvent.Game, TimeType.End);  
             StartCoroutine(MessageSender.Instance.Send(timeStatsMessage));
         }
     }

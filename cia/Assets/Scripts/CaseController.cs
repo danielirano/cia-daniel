@@ -374,13 +374,11 @@ public class CaseController : MonoBehaviour
         PlayerPrefs.SetInt("LoadCaseId", caseID);
         PlayerPrefs.SetString("LoadCaseSize", caseSize[caseID]);
 
-        int idDoCaso = caseID; // campo adicional que você está adicionando
-
-        CaseSelectedMessage message = new CaseSelectedMessage(idDoCaso);
+        CaseSelectedMessage message = new CaseSelectedMessage(caseID);
 
         StartCoroutine(MessageSender.Instance.Send(message));
 
-        TimeStatsMessage timeStatsMessage = new TimeStatsMessage(1, 0);  
+        TimeStatsMessage timeStatsMessage = new TimeStatsMessage(TimeEvent.Case, TimeType.Begin, caseID);  
 
         StartCoroutine(MessageSender.Instance.Send(timeStatsMessage));
 
@@ -543,6 +541,9 @@ public class CaseController : MonoBehaviour
         else if (countMainCases == (caseDetails.Count) && PlayerPrefs.GetInt("NarrativaId", 0) == 2)
         {
             certificateController.EnableCertifificate();
+
+            TimeStatsMessage timeStatsMessage = new TimeStatsMessage(TimeEvent.Game, TimeType.End, caseID);  
+            StartCoroutine(MessageSender.Instance.Send(timeStatsMessage));
         }
     }
 

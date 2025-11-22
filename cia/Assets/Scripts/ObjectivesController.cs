@@ -86,6 +86,10 @@ public class ObjectivesController : MonoBehaviour
         {
             StartCoroutine(inputController.StartDelay(inputController.acertoTela));
             casoEncerrado.SetActive(true);
+            
+            int caseID = PlayerPrefs.GetInt("LoadCaseId", 0);
+            TimeStatsMessage timeStatsMessage = new TimeStatsMessage(TimeEvent.Case, TimeType.End, caseID);  
+            StartCoroutine(MessageSender.Instance.Send(timeStatsMessage));
 
             string caseIDString = "RecordeCaso" + PlayerPrefs.GetInt("LoadCaseId", 0) + PlayerPrefs.GetInt("Tempo", 0) + PlayerPrefs.GetInt("PrecoAjuda", 0) + PlayerPrefs.GetInt("PalavrasInvertidas", 0) +
             PlayerPrefs.GetInt("PalavrasDiagonais", 0);

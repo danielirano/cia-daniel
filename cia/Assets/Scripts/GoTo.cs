@@ -6,13 +6,6 @@ using UnityEngine.SceneManagement;
 public class GoTo : MonoBehaviour
 {
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        CarregaDados.Load(this);
-        Debug.Log("URL = " + CarregaDados.conf.serverURL);
-    }
-
     public void LoadCena(string cena)
     {
         // Definindo o comportamento do jogo baseado no PlayerPrefs
@@ -29,12 +22,12 @@ public class GoTo : MonoBehaviour
 
         // Criar a mensagem para o servidor
         PlayGameMessage message = new PlayGameMessage();
-
-        TimeStatsMessage timeStatsMessage = new TimeStatsMessage(0, 0); 
-        StartCoroutine(MessageSender.Instance.Send(timeStatsMessage));
-
+        
         // Enviar a mensagem usando o MessageSender
         StartCoroutine(MessageSender.Instance.Send(message));
+
+        TimeStatsMessage timeStatsMessage = new TimeStatsMessage(TimeEvent.Game, TimeType.Begin); 
+        StartCoroutine(MessageSender.Instance.Send(timeStatsMessage));
 
         // Armazenar o índice da cena atual
         int index = SceneManager.GetActiveScene().buildIndex;

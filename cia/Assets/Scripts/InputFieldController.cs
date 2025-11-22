@@ -156,13 +156,12 @@ public class InputFieldController : MonoBehaviour
 
     public void PassWords(List<string> w)
     {
-        wordsRead = new List<string>(w);
-        foreach(string s in wordsRead)
+        wordsRead = new List<string>();
+        foreach(string s in w)
         {
+            wordsRead.Add(s.Replace("\n", "").Replace("\r", ""));
             checkPositions.Add(false);
         }
-
-        
     }
 
     void Read()
@@ -177,8 +176,9 @@ public class InputFieldController : MonoBehaviour
 
 
 
-    public bool ValidateWords()
-{
+    public bool ValidateWords() 
+    {
+    
     if (wordsRead[phraseId] == input.ToLower()) // Palavra correta
     {
         int pos = phraseId;
@@ -188,6 +188,9 @@ public class InputFieldController : MonoBehaviour
 
         if (pos == eachPhrase.Length - 1 && ultimoCaso == 1)
         {
+            TimeStatsMessage timeStatsMessage = new TimeStatsMessage(TimeEvent.Game, TimeType.End); 
+            StartCoroutine(MessageSender.Instance.Send(timeStatsMessage));
+            
             audioManager.RightAnswer();
             aviso.SetActive(false);
             TutControl.ObjectiveTut();

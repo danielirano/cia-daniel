@@ -52,4 +52,5 @@ public class Configuracao
     public string serverURL;
     public int resourceID;
     public int gameID;
+    public int playerID;
 }

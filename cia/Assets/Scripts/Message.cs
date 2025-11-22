@@ -12,11 +12,10 @@ public class Message {
 
     public Message() {
         this.messageType = this.GetType().ToString();
-        this.playerID = 1; // ToDO
+        this.playerID = CarregaDados.conf.playerID;
         this.gameID = CarregaDados.conf.gameID;
         this.resourceID = CarregaDados.conf.resourceID;
         this.time = ((DateTimeOffset)DateTime.Now).ToUnixTimeSeconds();
-
     }
 }
 
@@ -109,16 +108,37 @@ public class WordValidationMessage : Message
         this.correct = correct;
     }
 }
+
+[Serializable]
+public enum TimeEvent
+{
+    Game, // indica que é algum evento relacionado ao jogo
+    Case  // indica que é algum evento relacionado à fase/caso 
+}
+
+[Serializable]
+public enum TimeType
+{
+    Begin, // indica que é o início (de um jogo ou de uma fase)
+    End    // indica que é o fim (de um jogo ou de uma fase) 
+}
+
 [Serializable]
 public class TimeStatsMessage : Message
 {
-    public int timeEvent;  // 0 = jogo, 1 = fase/caso
-    public int timeType;   // 0 = início, 1 = fim
+    public TimeEvent timeEvent;  // 0 = jogo,   1 = fase/caso
+    public TimeType timeType;    // 0 = início, 1 = fim
+    public string level = null;
 
-    public TimeStatsMessage(int timeEvent, int timeType)
+    public TimeStatsMessage(TimeEvent timeEvent, TimeType timeType)
     {
         this.timeEvent = timeEvent;
         this.timeType = timeType;
+    }
+
+    public TimeStatsMessage(TimeEvent timeEvent, TimeType timeType, int level) : this(timeEvent, timeType)
+    {
+        this.level = level.ToString();
     }
 }
 

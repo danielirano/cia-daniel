@@ -20,15 +20,6 @@ public class GoTo : MonoBehaviour
             PlayerPrefs.SetInt("LoadCaseId", 100);
         }
 
-        // Criar a mensagem para o servidor
-        PlayGameMessage message = new PlayGameMessage();
-        
-        // Enviar a mensagem usando o MessageSender
-        StartCoroutine(MessageSender.Instance.Send(message));
-
-        TimeStatsMessage timeStatsMessage = new TimeStatsMessage(TimeEvent.Game, TimeType.Begin); 
-        StartCoroutine(MessageSender.Instance.Send(timeStatsMessage));
-
         // Armazenar o índice da cena atual
         int index = SceneManager.GetActiveScene().buildIndex;
         PlayerPrefs.SetInt("Index", index);

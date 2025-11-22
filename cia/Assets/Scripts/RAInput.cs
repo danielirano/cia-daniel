@@ -1,8 +1,8 @@
 using UnityEngine;
-using TMPro; // Required for TextMeshPro
+using TMPro;
 using UnityEngine.SceneManagement;
 
-public class TMPInputField : MonoBehaviour
+public class RAInput : MonoBehaviour
 {
     public TMP_InputField inputField;
     public TextMeshProUGUI outputText;
@@ -27,6 +27,17 @@ public class TMPInputField : MonoBehaviour
         {
             Debug.Log("Conversão OK");
             CarregaDados.conf.playerID = RA;
+            
+            // Criar a mensagem para o servidor
+            PlayGameMessage message = new PlayGameMessage();
+            
+            // Enviar a mensagem usando o MessageSender
+            StartCoroutine(MessageSender.Instance.Send(message));
+            
+            TimeStatsMessage timeStatsMessage = new TimeStatsMessage(TimeEvent.Game, TimeType.Begin); 
+            
+            StartCoroutine(MessageSender.Instance.Send(timeStatsMessage));
+
             SceneManager.LoadScene("MenuPrincipal");
         }
         else

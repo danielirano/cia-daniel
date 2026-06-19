@@ -536,9 +536,6 @@ public class CaseController : MonoBehaviour
         else if (countMainCases == (caseDetails.Count) && PlayerPrefs.GetInt("NarrativaId", 0) == 2)
         {
             certificateController.EnableCertifificate();
-
-            TimeStatsMessage timeStatsMessage = new TimeStatsMessage(TimeEvent.Game, TimeType.End);  
-            StartCoroutine(MessageSender.Instance.Send(timeStatsMessage));
         }
     }
 

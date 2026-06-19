@@ -53,4 +53,5 @@ public class Configuracao
     public int resourceID;
     public int gameID;
     public int playerID;
+    public bool endGame;
 }

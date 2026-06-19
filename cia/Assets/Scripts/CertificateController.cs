@@ -34,6 +34,11 @@ public class CertificateController : MonoBehaviour
     public void EnableCertifificate()
     {
         certificateButton.SetActive(true);
+        if (!CarregaDados.conf.endGame) {
+            TimeStatsMessage timeStatsMessage = new TimeStatsMessage(TimeEvent.Game, TimeType.End);  
+            StartCoroutine(MessageSender.Instance.Send(timeStatsMessage));
+            CarregaDados.conf.endGame = true;
+        }
     } 
     public void DisableCertifificate()
     {

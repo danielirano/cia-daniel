@@ -38,6 +38,8 @@ public class RAInput : MonoBehaviour
             
             StartCoroutine(MessageSender.Instance.Send(timeStatsMessage));
 
+            CarregaDados.conf.endGame = false;
+
             SceneManager.LoadScene("MenuPrincipal");
         }
         else

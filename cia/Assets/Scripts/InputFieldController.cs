@@ -102,7 +102,7 @@ public class InputFieldController : MonoBehaviour
     void SendWordSendMessage(bool palavraCorreta)
     {
         
-        WordSendMessage message = new WordSendMessage(palavraCorreta);
+        WordSendMessage message = new WordSendMessage(palavraCorreta, wordsRead[phraseId], input);
 
         StartCoroutine(MessageSender.Instance.Send(message));
     }

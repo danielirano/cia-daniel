@@ -88,10 +88,14 @@ public class CaseDetailsMessage : Message
 public class WordSendMessage : Message
 {
     public bool palavraCorreta; // true = correta, false = incorreta
+    public string palavraEsperada;
+    public string palavraDigitada;
 
-    public WordSendMessage(bool palavraCorreta)
+    public WordSendMessage(bool palavraCorreta, string palavraEsperada, string palavraDigitada)
     {
         this.palavraCorreta = palavraCorreta;
+        this.palavraEsperada = palavraEsperada;
+        this.palavraDigitada = palavraDigitada;
     }
 }
 
